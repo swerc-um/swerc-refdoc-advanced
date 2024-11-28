@@ -40,7 +40,7 @@ def query(p):
         p >>= 1
     return res
 
-# reduce the complexity from $O(\N log N)$ to $O(\N)$ to get all values.
+# reduce the complexity from O(N log N) to O(N) to get all values.
 # works only in case the order of modifications on a single element doesn't affect the result.
 def push():
     for i in range(1, N):
