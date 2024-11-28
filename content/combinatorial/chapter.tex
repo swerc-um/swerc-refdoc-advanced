@@ -19,6 +19,7 @@
 
 \section{Partitions and subsets}
 	\subsection{Partition function}
+		\kactlimport{Partitions.py}
 		Number of ways of writing $n$ as a sum of positive integers, disregarding the order of the summands.
 		\[ p(0) = 1,\ p(n) = \sum_{k \in \mathbb Z \setminus \{0\}}{(-1)^{k+1} p(n - k(3k-1) / 2)} \]
 		\[ p(n) \sim 0.145 / n \cdot \exp(2.56 \sqrt{n}) \]
@@ -30,10 +31,8 @@
 		\end{tabular}
 		\end{center}
 
-        \kactlimport{Partitions.py}
-
 	\subsection{Lucas' Theorem}
-		Let $n,m$ be non-negative integers and $p$ a prime. Write $n=n_kp^k+...+n_1p+n_0$ and $m=m_kp^k+...+m_1p+m_0$. Then $\binom{n}{m} \equiv \prod_{i=0}^k\binom{n_i}{m_i} \pmod{p}$.
+		Let $n,m$ be non-negative integers and $p$ a prime. Write $n=n_kp^k+...+n_1p+n_0$ and $m=m_kp^k+...+m_1p+m_0$. Then $\binom{n}{m} \equiv \prod_{i=0}^k\binom{n_i}{m_i} \pmod{p}$ \newline
 
 	\subsection{Binomials}
 		\kactlimport{multinomial.h}
