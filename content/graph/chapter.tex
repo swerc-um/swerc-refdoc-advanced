@@ -43,6 +43,10 @@
 	\kactlimport{MinCostMaxFlow.h}
 	\kactlimport{CirculationDemands.py}
 
+\section{$s-t$ coupe minimum pour graphe planaire}
+    Dans le graphe \emph{dual}, chaque cellule est un sommet, et il existe deux sommets supplémentaires $s'$ et $t'$. Le sommet $s'$ représente le bord gauche et haut de la grille et le sommet $t'$ le bord droit et bas. Dans ce nouveau graphe, deux sommets sont reliés s'ils sont séparés par une arête du graphe primal. Le poids des arêtes est le même.
+    Tout $s'-t'$ chemin dans le graphe dual de longueur $w$ correspond à une $s-t$ coupe dans le graphe primal de même valeur $w$ et vice-versa.
+
 \section{Matching}
 	\kactlimport{MCBF.py}
 	\kactlimport{VertexCover.py}
