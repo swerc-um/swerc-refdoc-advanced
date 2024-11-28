@@ -1,4 +1,3 @@
-#!/bin/bash
-
-# Read from standard input (e.g., piped content)
-cat - | grep -vE '^\s*(#|$)' | tr -d '[:space:]' | md5sum | cut -c-6
+# Hashes a file, ignoring all whitespace and comments. Use for
+# verifying that code was correctly typed.
+cpp -dD -P -fpreprocessed | tr -d '[:space:]'| md5sum |cut -c-6
