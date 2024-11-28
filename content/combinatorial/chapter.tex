@@ -90,7 +90,6 @@
 			\item ways a convex polygon with $n+2$ sides can be cut into triangles by connecting vertices with straight lines.
 			\item permutations of $[n]$ with no 3-term increasing subseq.
 		\end{itemize}
-        \kactlimport{IntPerm.h}
 
 \section{Computation}
     \subsection{Catalan Balanced Sequences}
@@ -100,8 +99,8 @@
     \[
     \text{catalan\_bal}(n, s, e) =
     \begin{cases}
-    0, & (n+s+e)\!\mod\!2 \neq 0 \text{ or } s<0 \text{ or } e<0, \\
-    \binom{n}{\frac{n+e-s}{2}} - \binom{n}{\frac{n-e-s-2}{2}}, & \text{otherwise}.
+    0, (n+s+e)\!\mod\!2 \neq 0 \text{ or } s<0 \text{ or } e<0, \\
+    \binom{n}{\frac{n+e-s}{2}} - \binom{n}{\frac{n-e-s-2}{2}}, \text{otherwise}.
     \end{cases}
     \]
 
@@ -125,7 +124,7 @@
     \textbf{Avoiding Upper Barrier:} \texttt{path\_up} \\
     Avoiding $y=x+b$, $b>0$:
     \[
-    \text{path\_up}(x, y, b) = 
+    \text{path\_up}(x, y, b) =
     \begin{cases}
     0, & b\leq 0, \\
     \text{path}(x, y) - \text{path}(y-b, x+b), & b>0.
@@ -133,28 +132,27 @@
     \]
 
     \textbf{Alternating Constraints:} \texttt{calc\_LUL} \\
-    Paths from $(0, 0)$ to $(x, y)$ alternating constraints $y=x+b_1$ and $y=x+b_2$:
-    \[
-    \text{calc\_LUL}(x, y, b_1, b_2) = 
+    Paths from $(0, 0)$ to $(x, y)$ alternating constraints $y=x+b_1$ and $y=x+b_2$: \newline
+    $\text{calc\_LUL}(x, y, b_1, b_2) =$ \newline
+	\[
     \begin{cases}
-    0, & x<b_1 \text{ or } y<-b_1, \\
-    \text{path}(x-b_1, y+b_1) - \text{calc\_LUL}(y+b_1, x-b_1, -b_2, -b_1), & \text{otherwise}.
+    0, x<b_1 \text{ or } y<-b_1, \\
+    \text{path}(x-b_1, y+b_1) - \text{calc\_LUL}(y+b_1, x-b_1, -b_2, -b_1), \text{otherwise}.
     \end{cases}
     \]
 
     \textbf{Two Barriers:} \texttt{path\_2} \\
     Avoiding $y=x+b_1$ and $y=x+b_2$:
-    \[
-    \text{path\_2}(x, y, b_1, b_2) = \text{path}(x, y) - \newline
-    \text{calc\_LUL}(x, y, b_1, b_2) - \text{calc\_LUL}(y, x, -b_2, -b_1).
-    \]
+    $\text{path\_2}(x, y, b_1, b_2) =$ \newline
+	$\text{path}(x, y) - \text{calc\_LUL}(x, y, b_1, b_2) - \text{calc\_LUL}(y, x, -b_2, -b_1)$
 
     \subsection{Gambler's Ruin Problem}
     \textbf{Right Boundary:} \texttt{gambler\_ruin\_right} \\
     Probability of reaching $R$ starting at $L$:
+    
+    $\text{gambler\_ruin\_right}(L, R, p_{\text{right}}) = $ \newline
     \[
-    \text{gambler\_ruin\_right}(L, R, p_{\text{right}}) =
-    \begin{cases}
+	\begin{cases}
     \frac{L}{L+R}, & p_{\text{right}} = 0.5, \\
     1, & p_{\text{right}} = 1, \\
     0, & p_{\text{right}} = 0, \\

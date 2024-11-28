@@ -1,7 +1,7 @@
 """
  * Author: X
- * Description: Cocke–Younger–Kasami
- * Time: $O(n^3 \cdot |G|)$, \( n \) length of parsed string, \( |G| \) size of the CNF grammar.
+ * Description: Cocke–Younger–Kasami, \( n \) length of parsed string, \( |G| \) size of the CNF grammar.
+ * Time: $O(n^3 \cdot |G|)$
 """
 
 s = input(); n = len(s)
