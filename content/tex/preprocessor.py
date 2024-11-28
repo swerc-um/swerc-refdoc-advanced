@@ -152,7 +152,7 @@ def processwithcomments(caption, instream, outstream, listingslang):
         hsh = hsh.split(None, 1)[0]
         hsh = hsh + ', '
     elif listingslang == 'Python':
-        hash_script = 'hash_python'
+        hash_script = 'hashpy'
         p = subprocess.Popen(['sh', 'content/contest/%s.sh' % hash_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE, encoding="utf-8")
         hsh, _ = p.communicate(nsource)
         hsh = hsh.split(None, 1)[0]
