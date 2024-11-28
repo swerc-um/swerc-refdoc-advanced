@@ -141,6 +141,14 @@ $1^4 + 2^4 + 3^4 + \dots + n^4 = \frac{n(n+1)(2n+1)(3n^2 + 3n - 1)}{30}$ \\
     With empty boxes allowed: $C_{n+k-1}^k$
     With no empty box: $C_{n-1}^{k-1}$
 
+    \subsection{Coefficients binomiaux}
+    \item Somme sur $n$: $\sum_{n = p}^q \binom n k = \binom{q + 1}{k + 1} - \binom{p}{k + 1}$
+    
+    \subsection{Principe d'inclusion-exclusion}
+    $$
+        \abs{\bigcup_{i \in I} A_i} = \sum_{\substack{J \subset I \\ J \neq \emptyset}} (-1)^{\abs J - 1} \abs{\bigcap_{j \in J} A_j}
+    $$
+
 \section{Probability theory}
 Let $X$ be a discrete random variable with probability $p_X(x)$ of assuming the value $x$. It will then have an expected value (mean) $\mu=\mathbb{E}(X)=\sum_xxp_X(x)$ and variance $\sigma^2=V(X)=\mathbb{E}(X^2)-(\mathbb{E}(X))^2=\sum_x(x-\mathbb{E}(X))^2p_X(x)$ where $\sigma$ is the standard deviation. If $X$ is instead continuous it will have a probability density function $f_X(x)$ and the sums above will instead be integrals with $p_X(x)$ replaced by $f_X(x)$.
 
