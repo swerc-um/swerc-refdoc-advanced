@@ -14,13 +14,10 @@ def kuhn_munkres(G, TOLERANCE=1e-6):
     assert len(G) <= len(G[0])
     nU, nV = len(G), len(G[0])
     U, V = range(nU), range(nV)
-    mu = [None] * nU
-    mv = [None] * nV
-    lu = [max(row) for row in G]
-    lv = [0] * nV
+    mu, mv = [None] * nU, [None] * nV
+    lu, lv = [max(row) for row in G], [0] * nV
     for root in U:
-        au = [False] * nU
-        au[root] = True
+        au = [False] * nU; au[root] = True
         Av = [None] * nV
         slack = [(lu[root]+lv[v]-G[root][v],root)for v in V]
         while True:
@@ -29,29 +26,23 @@ def kuhn_munkres(G, TOLERANCE=1e-6):
             assert au[u]
             if delta > TOLERANCE:
                 for u0 in U:
-                    if au[u0]:
-                        lu[u0] -= delta
+                    if au[u0]: lu[u0] -= delta
                 for v0 in V:
-                    if Av[v0] is not None:
-                        lv[v0] += delta
+                    if Av[v0] is not None: lv[v0] += delta
                     else:
                         (val, arg) = slack[v0]
                         slack[v0] = (val - delta, arg)
             assert abs(lu[u] + lv[v] - G[u][v]) <= TOLERANCE
             Av[v] = u
-            if mv[v] is None:
-                break
+            if mv[v] is None: break
             u1 = mv[v]
             assert not au[u1]
             au[u1] = True
             for v1 in V:
                 if Av[v1] is None:
                     alt = (lu[u1] + lv[v1] - G[u1][v1], u1)
-                    if slack[v1] > alt:
-                        slack[v1] = alt
+                    if slack[v1] > alt: slack[v1] = alt
         while v is not None:
-            u = Av[v]
-            prec = mu[u]
-            mv[v], mu[u] = u, v
-            v = prec
+            u = Av[v]; prec = mu[u]
+            mv[v], mu[u] = u, v; v = prec
     return (mu, sum(lu) + sum(lv))

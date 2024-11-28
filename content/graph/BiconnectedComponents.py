@@ -12,11 +12,9 @@ class BiconnectedComponents:
     def __init__(self, graph):
         self.n = n = len(graph)
         self.m = sum(len(dsts) for dsts in graph) >> 1
-        self.nbcs, self.bcvp = 0, []
-        self.graph = graph
+        self.nbcs, self.bcvp, self.graph = 0, [], graph
         if n == 0: self.nbcs = 0; return
-        used = bytearray(n)
-        parent, order = [0] * n, [0] * n
+        used, parent, order = bytearray(n),[0]*n,[0]*n
         def dfs(start, idx):
             Q, parent[start] = [start], -1
             while Q:
@@ -50,13 +48,11 @@ class BiconnectedComponents:
             if low[p] < v2dfs[pp]:
                 low[p] = low[pp];self.bcvp.append((low[p], p))
             else:
-                low[p] = nbcs
-                nbcs += 1
+                low[p] = nbcs; nbcs += 1
                 self.bcvp.append((low[p], pp));self.bcvp.append((low[p], p))
         for s in range(n):
             if not graph[s]:
-                self.bcvp.append((nbcs, s))
-                nbcs += 1
+                self.bcvp.append((nbcs, s)); nbcs += 1
         self.nbcs = nbcs
     def __len__(self): return self.nbcs
     def bcc(self):
@@ -64,8 +60,7 @@ class BiconnectedComponents:
         for idx, v in self.bcvp: bcc_[idx].append(v)
         return bcc_
     def merged_bcc(self):
-        N, bcc_ = 0, []
-        repr_ = [-1] * self.n
+        N, bcc_, repr_ = 0, [], [-1] * self.n
         for vlst in self.bcc():
             if len(vlst) <= 2: continue
             to_merge = []
@@ -82,7 +77,6 @@ class BiconnectedComponents:
         BCCs = [[] for _ in range(N)]
         for v in range(self.n):
             if repr_[v] == -1:
-                repr_[v] = N; BCCs.append([v])
-                N += 1
+                repr_[v] = N; BCCs.append([v]); N += 1
             else: BCCs[repr_[v]].append(v)
         return BCCs, repr_

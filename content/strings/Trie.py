@@ -4,16 +4,13 @@
  * Time: $O(N)$
 """
 
-trie = [-1]*int(27*1e6)
-j = 27
+trie, j = [-1]*int(27*1e6), 27
 #insert list of words
 for w in words:
     i = 0
     for char in w:
         c = ord(char) - 97
-        if trie[i + c] == -1:
-            trie[i + c] = j
-            j += 27
+        if trie[i+c]==-1: trie[i+c]=j; j+=27
         i = trie[i + c]
     trie[i + 26] = 1
 #check if w in trie
@@ -21,8 +18,5 @@ i = 0
 for char in w:
     c = ord(char) - 97
     i = trie[i + c]
-    if i == -1:
-        break
-    if trie[i + 26] == 1:
-        # this is a valid word
-        pass
+    if i == -1:  break
+    if trie[i + 26] == 1: pass# this is a valid word

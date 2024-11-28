@@ -13,20 +13,16 @@ while Q:
     v = Q[-1]
     if ts[v] == len(adj[v]):
         for u in adj[v]:
-            if u == prev[v]:
-                continue
+            if u == prev[v]: continue
             sz[v] += sz[u]
-        order.append(v)
-        Q.pop()
+        order.append(Q.pop())
     else:
         u = adj[v][ts[v]]
         if u == prev[v]:
             ts[v] += 1
-            if ts[v] == len(adj[v]):
-                continue
+            if ts[v] == len(adj[v]):continue
             u = adj[v][ts[v]]
-        ts[v] += 1; ts[u] = 0
-        prev[u] = v
+        ts[v] += 1; ts[u] = 0; prev[u] = v
         Q.append(u)
 order.reverse()
 index = [None] * n

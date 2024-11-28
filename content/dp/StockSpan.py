@@ -4,8 +4,7 @@
  * Time: $O(N)$
 """
 def compute_extension(a):
-    extension = [0]
-    ms = [0]
+    extension, ms = [0], [0]
     for i in range(1, len(a)):
         while ms and a[i] <= a[ms[-1]]: ms.pop()
         if ms: extension.append(i - ms[-1] - 1)

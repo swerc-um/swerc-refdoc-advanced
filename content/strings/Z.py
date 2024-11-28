@@ -7,13 +7,8 @@
  * Time: $O(N)$
 """
 
-Z = [0] * n
-l = r = 0
+Z, l, r = [0] * n, 0, 0
 for i in range(1, n):
-    if i <= r:
-        Z[i] = min(Z[i - l], r - i + 1)
-    while i + Z[i] < n and s[Z[i]] == s[i + Z[i]]:
-        Z[i] += 1
-    if i + Z[i] - 1 > r:
-        l = i
-        r = i + Z[i] - 1
+    if i <= r: Z[i] = min(Z[i-l],r-i+1)
+    while i+Z[i]<n and s[Z[i]]==s[i + Z[i]]: Z[i] += 1
+    if i + Z[i] - 1 > r: l, r = i, i + Z[i] - 1

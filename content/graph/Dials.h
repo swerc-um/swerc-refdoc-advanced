@@ -16,9 +16,5 @@ void dials(int st, vector<vpii> adj, int lim=10){
                 if (dist[nxt] == -1 || dist[nxt] > d + cost) {
                     dist[nxt] = d + cost;
                     Qs[dist[nxt] % (lim + 1)].push_back(nxt);
-                    mx = max(mx, dist[nxt]);
-                }
-            }
-        }
-    }
+                    mx = max(mx, dist[nxt]);}}}}
 }

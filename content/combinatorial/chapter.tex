@@ -5,10 +5,6 @@
 		\kactlimport{factorial.tex}
 		\kactlimport{IntPerm.h}
 
-	\subsection{Cycles}
-		Let $g_S(n)$ be the number of $n$-permutations whose cycle lengths all belong to the set $S$. Then
-		$$\sum_{n=0} ^\infty g_S(n) \frac{x^n}{n!} = \exp\left(\sum_{n\in S} \frac{x^n} {n} \right)$$
-
 	\subsection{Derangements}
 		Permutations of a set such that none of the elements appear in their original position.
 		\[ \mkern-2mu D(n) = (n-1)(D(n-1)+D(n-2)) = n D(n-1)+(-1)^n = \left\lfloor\frac{n!}{e}\right\rceil \]
@@ -34,6 +30,8 @@
 		\end{tabular}
 		\end{center}
 
+        \kactlimport{Partitions.py}
+
 	\subsection{Lucas' Theorem}
 		Let $n,m$ be non-negative integers and $p$ a prime. Write $n=n_kp^k+...+n_1p+n_0$ and $m=m_kp^k+...+m_1p+m_0$. Then $\binom{n}{m} \equiv \prod_{i=0}^k\binom{n_i}{m_i} \pmod{p}$.
 
@@ -48,12 +46,6 @@
 		Sums of powers:
 		\small
 		\[ \sum_{i=1}^n n^m = \frac{1}{m+1} \sum_{k=0}^m \binom{m+1}{k} B_k \cdot (n+1)^{m+1-k} \]
-		\normalsize
-
-		Euler-Maclaurin formula for infinite sums:
-		\small
-		\[ \sum_{i=m}^{\infty} f(i) = \int_m^\infty f(x) dx - \sum_{k=1}^\infty \frac{B_k}{k!}f^{(k-1)}(m) \]
-		\[ \approx \int_{m}^\infty f(x)dx + \frac{f(m)}{2} - \frac{f'(m)}{12} + \frac{f'''(m)}{720} + O(f^{(5)}(m)) \]
 		\normalsize
 
 	\subsection{Stirling numbers of the first kind}
@@ -115,46 +107,47 @@
     \]
 
     \subsection{Grid Path Calculations}
-    \textbf{Grid Path:} \texttt{grid\_path} \\
+    \textbf{Grid Path:} \texttt{path} \\
     Paths from $(0, 0)$ to $(x, y)$:
     \[
-    \text{grid\_path}(x, y) = \binom{x+y}{x}.
+    \text{path}(x, y) = \binom{x+y}{x}.
     \]
 
-    \textbf{Avoiding Low Barrier:} \texttt{grid\_path\_low} \\
+    \textbf{Avoiding Low Barrier:} \texttt{path\_low} \\
     Avoiding $y=x+b$, $b<0$:
     \[
-    \text{grid\_path\_low}(x, y, b) = 
+    \text{path\_low}(x, y, b) = 
     \begin{cases}
     0, & b\geq 0, \\
-    \text{grid\_path}(x, y) - \text{grid\_path}(y-b, x+b), & b<0.
+    \text{path}(x, y) - \text{path}(y-b, x+b), & b<0.
     \end{cases}
     \]
 
-    \textbf{Avoiding Upper Barrier:} \texttt{grid\_path\_up} \\
+    \textbf{Avoiding Upper Barrier:} \texttt{path\_up} \\
     Avoiding $y=x+b$, $b>0$:
     \[
-    \text{grid\_path\_up}(x, y, b) = 
+    \text{path\_up}(x, y, b) = 
     \begin{cases}
     0, & b\leq 0, \\
-    \text{grid\_path}(x, y) - \text{grid\_path}(y-b, x+b), & b>0.
+    \text{path}(x, y) - \text{path}(y-b, x+b), & b>0.
     \end{cases}
     \]
 
-    \textbf{Alternating Constraints:} \texttt{grid\_calc\_LUL} \\
+    \textbf{Alternating Constraints:} \texttt{calc\_LUL} \\
     Paths from $(0, 0)$ to $(x, y)$ alternating constraints $y=x+b_1$ and $y=x+b_2$:
     \[
-    \text{grid\_calc\_LUL}(x, y, b_1, b_2) = 
+    \text{calc\_LUL}(x, y, b_1, b_2) = 
     \begin{cases}
     0, & x<b_1 \text{ or } y<-b_1, \\
-    \text{grid\_path}(x-b_1, y+b_1) - \text{grid\_calc\_LUL}(y+b_1, x-b_1, -b_2, -b_1), & \text{otherwise}.
+    \text{path}(x-b_1, y+b_1) - \text{calc\_LUL}(y+b_1, x-b_1, -b_2, -b_1), & \text{otherwise}.
     \end{cases}
     \]
 
-    \textbf{Two Barriers:} \texttt{grid\_path\_2} \\
+    \textbf{Two Barriers:} \texttt{path\_2} \\
     Avoiding $y=x+b_1$ and $y=x+b_2$:
     \[
-    \text{grid\_path\_2}(x, y, b_1, b_2) = \text{grid\_path}(x, y) - \text{grid\_calc\_LUL}(x, y, b_1, b_2) - \text{grid\_calc\_LUL}(y, x, -b_2, -b_1).
+    \text{path\_2}(x, y, b_1, b_2) = \text{path}(x, y) -\\
+    \text{calc\_LUL}(x, y, b_1, b_2) - \text{calc\_LUL}(y, x, -b_2, -b_1).
     \]
 
     \subsection{Gambler's Ruin Problem}

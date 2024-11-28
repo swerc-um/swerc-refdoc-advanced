@@ -12,37 +12,25 @@
 def gen_sufarr_lcp(words):
     def radix_sort(p_, c_):
         count = [0 for _ in range(len(p_))]
-        for x in p_:
-            count[c_[x]] += 1
+        for x in p_: count[c_[x]] += 1
         new_p = p_.copy()
         pos = [0 for _ in range(len(p_))]
-        for i in range(1, len(p_)):
-            pos[i] = pos[i-1] + count[i-1]
-        for x in p_:
-            new_p[pos[c_[x]]] = x
-            pos[c_[x]] += 1
+        for i in range(1, len(p_)): pos[i]=pos[i-1]+count[i-1]
+        for x in p_: new_p[pos[c_[x]]]=x; pos[c_[x]]+=1
         return new_p
-    s_ = []
-    sep = 0
-    sidx = []
+    s_, sep, sidx = [], 0, []
     for idx, word in enumerate(words):
         for char in word:
-            s_.append(len(words)+ord(char))
-            sidx.append(idx)
-        s_.append(sep)
-        sidx.append(-1)
-        sep += 1
+            s_.append(len(words)+ord(char)); sidx.append(idx)
+        s_.append(sep); sidx.append(-1); sep += 1
     n = len(s_)
     a = [(s_[i], i) for i in range(n)]
     a.sort(key=lambda x: x[0])
     sufarr = [a[i][1] for i in range(n)]
-    c = [0] * n
-    c[sufarr[0]] = 0
+    c = [0] * n; c[sufarr[0]] = 0
     for i in range(1, n):
-        if a[i][0] == a[i-1][0]:
-            c[sufarr[i]] = c[sufarr[i-1]]
-        else:
-            c[sufarr[i]] = c[sufarr[i-1]]+1
+        if a[i][0] == a[i-1][0]: c[sufarr[i]]=c[sufarr[i-1]]
+        else: c[sufarr[i]] = c[sufarr[i-1]]+1
     k = 1
     while (1 << k) <= 2*n:
         sufarr = [(sufarr[i]-(1<<(k-1)))%n for i in range(n)]
@@ -51,37 +39,26 @@ def gen_sufarr_lcp(words):
         prev = (c[sufarr[0]], c[(sufarr[0]+(1<<(k-1)))%n])
         for i in range(1, n):
             curr = (c[sufarr[i]], c[(sufarr[i]+(1<<(k-1)))%n])
-            if prev == curr:
-                c_new[sufarr[i]] = c_new[sufarr[i-1]]
-            else:
-                c_new[sufarr[i]] = c_new[sufarr[i-1]] + 1
+            if prev == curr: c_new[sufarr[i]]=c_new[sufarr[i-1]]
+            else: c_new[sufarr[i]]=c_new[sufarr[i-1]]+1
             prev = curr
-        c = c_new
-        k += 1
-        if c_new[sufarr[n-1]] == n - 1:
-            break
+        c = c_new; k += 1
+        if c_new[sufarr[n-1]] == n - 1: break
     # sufarr is done generating
-    lcp = [0] * (n-1)
-    k = 0
+    lcp, k = [0] * (n-1), 0
     for i in range(n-1):
-        pi = c[i]
-        j = sufarr[pi - 1]
-        while s_[i+k] == s_[j+k]:
-            k += 1
-        lcp[pi-1] = k
-        k = max(k-1, 0)
+        pi = c[i]; j = sufarr[pi - 1]
+        while s_[i+k] == s_[j+k]: k += 1
+        lcp[pi-1] = k; k = max(k-1, 0)
     suf2s = [sidx[sufarr[i]] for i in range(len(words), n)]
-    sufarr = sufarr[len(words):]
-    lcp = lcp[len(words)-1:]
+    sufarr = sufarr[len(words):]; lcp = lcp[len(words)-1:]
     return sufarr, lcp, suf2s, s_
 
 def longest_common_substring(S, T):
-    L=len(S)
-    A=S+"!"+T
+    L,A=len(S), S+"!"+T
     sa = suffix_array(A)
     lcp = lcp_array(A, sa)
-    ans = [0]*4
-    best = 0
+    ans, best = [0]*4, 0
     for i in range(len(A)-1):
         if (sa[i]<L)==(sa[i+1]<L): continue
         if lcp[i]>best:
@@ -97,31 +74,22 @@ def longest_common_substring(S, T):
 def longest_common_substring(strings, k):
     # longest common substring such that k strings shares it
     n = len(strings)
-    if n == 1:
-        return len(strings[0]), [strings[0]]
+    if n == 1:return len(strings[0]),[strings[0]]
     assert k > 1
     sufarr, lcp, suf2s, text = gen_sufarr_lcp(strings)
     st = SparseTable(lcp)
-    l = 0
-    sn = [0] * n
+    l, sn = 0, [0] * n
     sn[suf2s[0]] += 1
-    zeros = n-1
-    lcs = 0
-    start_idx = []
+    zeros, lcs, start_idx = n-1, 0, []
     for r in range(1, len(lcp)):
-        if sn[suf2s[r]] == 0:
-            zeros -= 1
+        if sn[suf2s[r]] == 0:zeros -= 1
         sn[suf2s[r]] += 1
         while (n - zeros) >= k:
             minimum = st.prod(l+1, r+1)
-            if minimum > lcs:
-                lcs = minimum
-                start_idx = [sufarr[r]]
-            elif minimum == lcs:
-                start_idx.append(sufarr[r])
+            if minimum > lcs:lcs = minimum; start_idx=[sufarr[r]]
+            elif minimum == lcs:start_idx.append(sufarr[r])
             sn[suf2s[l]] -= 1
-            if sn[suf2s[l]] == 0:
-                zeros += 1
+            if sn[suf2s[l]] == 0:zeros += 1
             l += 1
     if lcs == 0: return 0, []
     substrings = sorted(''.join(chr(char - n) for char in text[st:st+lcs])
@@ -139,8 +107,7 @@ def longest_repeated_substring(s):
     if lrs == 0: return 0, []
     substrings = []
     for i in range(len(lcp)):
-        if lcp[i] == lrs:
-            substrings.append(s[sufarr[i]:sufarr[i]+lrs])
+        if lcp[i] == lrs:substrings.append(s[sufarr[i]:sufarr[i]+lrs])
     substrings.sort()
     last, res = None, []
     for subs in substrings:

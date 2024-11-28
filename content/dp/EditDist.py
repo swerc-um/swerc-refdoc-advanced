@@ -5,9 +5,8 @@
 """
 
 def edit_dist(a, b):
-    if len(a) > len(b):
-        a, b = b, a
-    dp = [[1<<20] * (len(a)+1) for _ in range(len(b)+1)]
+    if len(a) > len(b): a, b = b, a
+    dp = [[1<<20]*(len(a)+1)for _ in range(len(b)+1)]
     dp[0][0] = 0
     for i in range(1, len(b)+1):
         if i < len(a)+1: dp[0][i] = i

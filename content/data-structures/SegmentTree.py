@@ -4,7 +4,6 @@
  * Time: $O(N\log N)$
 """
 
-# POINT UPDATE, RANGE QUERY
 def update(p, val):
     p += N
     seg[p] = val
@@ -26,7 +25,6 @@ for i in range(n):
 for k in range(N - 1, 0, -1):
     seg[k] = seg[k<<1] + seg[k<<1|1]
 
-# RANGE UPDATE, POINT QUERY
 # supprimer ligne -> for k in range(N - 1, 0, -1):
 def update(l, r, val): # [l, r)
     l += N; r += N

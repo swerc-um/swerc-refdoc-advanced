@@ -5,14 +5,11 @@
 """
 
 def create_string_hash(string, n, p, mod):
-    hash_prefixes = [0] * (n + 1)
-    powers = [1] * (n + 1)
-    for i in range(1, n + 1):
-        powers[i] = (powers[i - 1] * p) % mod
-    for i in range(n):
-        hash_prefixes[i + 1] = (hash_prefixes[i] * p + (ord(string[i]) - ord("a") + 1)) % mod
-    return hash_prefixes, powers
+    hash_p, powers = [0] * (n + 1), [1] * (n + 1)
+    for i in range(1, n + 1): powers[i] = (powers[i - 1] * p) % mod
+    for i in range(n): hash_p[i+1]=(hash_p[i]*p+(ord(string[i])-ord("a")+1))%mod
+    return hash_p, powers
 
-def get_hash(hash_prefixes, powers, mod, i, j):
+def get_hash(hash_p, powers, mod, i, j):
     # Returns the hash of the substring s[i:j] (j excluded) 
-    return (hash_prefixes[j] - hash_prefixes[i] * powers[j-i]) % mod
+    return (hash_p[j] - hash_p[i] * powers[j-i]) % mod

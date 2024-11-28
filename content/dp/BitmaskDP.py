@@ -12,9 +12,6 @@ def GospersHack(k,n):
         lb=cur&-cur
         r=cur+lb
         cur=(r^cur)>>lb.bit_length()+1|r
-
-N = 20    
-ALLSET = (1<<N)-1
 dp = [1<<59] * (1<<N)
 dp[0] = 0
 for mask in range(1, 1<<N):
@@ -25,4 +22,3 @@ for mask in range(1, 1<<N):
             if mask>>col2&1: continue
             c += cost[col1][col2]
         dp[mask] = min(dp[mask], dp[mask^(1<<col1)]+c)
-print(dp[ALLSET])

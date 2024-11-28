@@ -1,35 +1,23 @@
 /**
  * Author: X
- * Date: X
- * Source: X
  * Description: Simple undirected unweighted graph
- * A graph is **chordal** if it does not have an induced cycle of length four or more.
- * A **perfect elimination ordering** is an ordering of the vertices such that for every
- * vertex v, v and the neighbors of v that appear after it in the ordering form a clique.
- * It can be shown that a graph is chordal if and only if it has a perfect elimination ordering.
- * If the graph is chordal, find a perfect elimination ordering.
- * If the graph is not chordal, find an induced cycle of length four or more.
- * - Constraints :
- * \[1 \leq N \leq 2 \times 10^5\]
- * \[0 \leq M \leq 2 \times 10^5\]
+ * Graph chordal = no induced cycle of length four or more.
+ * PEO = ordering of the vertices such that for every vertex v, v and the neighbors of v that appear after it in the ordering form a clique.
+ * Graph is chordal <=> it has a PEO.
+ * Find PEO or induced cycle of length four or more.
  * To color the graph greedily according to the PEO:
  * Starting from the last vertex in the PEO, assign colors to each vertex in order,
  * choosing the smallest available color that hasn't been assigned to its already-colored neighbors.
- * Because the graph is chordal, each vertex's neighbors form a clique among
- * vertices appearing later in the PEO.
- * Time: X
+ * Because the graph is chordal, each vertex's neighbors form a clique among vertices appearing later in the PEO.
+ * Time: O(N)
  * Status: Tested
  */
 
-struct Set {
-    list<int> L; int last;
-    Set() { last = 0; }
-};
+struct Set {list<int> L; int last; Set() { last = 0; }};
 struct PEO {
     int N;
     vector<vector<int> > g;
-    vector<int> vis, res;
-    list<Set> L;
+    vector<int> vis, res; list<Set> L;
     vector<list<Set>::iterator> ptr;
     vector<list<int>::iterator> ptr2;
     PEO(int n, vector<vector<int> > _g) {
@@ -43,7 +31,6 @@ struct PEO {
         }
     }
     pair<bool, vector<int>> Run() {
-        // lexicographic BFS
         int time = 0;
         while (!L.empty()) {
             if (L.front().L.empty()) { L.pop_front(); continue; }
@@ -92,11 +79,5 @@ vector<vector<int>> G(N+1);
 for(int i=1,s,e; i<=M; i++)
     cin >> s >> e, G[s+1].push_back(e+1), G[e+1].push_back(s+1);
 auto [flag,vec] = PEO(N, G).Run();
-if(flag){
-    cout << "YES\n";
-    for(auto i : vec) cout << i - 1 << " ";
-}
-else{
-    cout << "NO\n" << vec.size() << "\n";
-    for(auto i : vec) cout << i - 1 << " ";
-}
+if(flag){for(auto i : vec) cout << i - 1 << " ";} //YES
+else{for(auto i : vec) cout << i - 1 << " ";} //NO

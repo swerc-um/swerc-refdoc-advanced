@@ -40,22 +40,15 @@ T2 union_rectangles(const vector<pair<pair<T,T>,pair<T,T>>>&recs){
     while(i){
       if(mn[i*2]==mn[i*2+1]){
         mn[i]+=mn[i*2]; mn[i*2]=mn[i*2+1]=0;
-        cnt[i]=cnt[i*2]+cnt[i*2+1];
-      }
+        cnt[i]=cnt[i*2]+cnt[i*2+1];}
       else if(mn[i*2]<mn[i*2+1]){
         mn[i]+=mn[i*2]; mn[i*2+1]-=mn[i*2]; mn[i*2]=0;
-        cnt[i]=cnt[i*2];
-      }
+        cnt[i]=cnt[i*2];}
       else{
         mn[i]+=mn[i*2+1]; mn[i*2]-=mn[i*2+1]; mn[i*2+1]=0;
-        cnt[i]=cnt[i*2+1];
-      }
-      i>>=1;
-    }
-  };
-  T2 res=0;
-  T prex=query[0].x;
-  T aly=zy.back()-zy.front();
+        cnt[i]=cnt[i*2+1];}
+      i>>=1;}};
+  T2 res=0; T prex=query[0].x; T aly=zy.back()-zy.front();
   for(auto&[x,l,r,add]:query){
     res+=T2(x-prex)*(aly-(mn[1]==0?cnt[1]:0));
     prex=x; l+=z,r+=z;
@@ -63,9 +56,6 @@ T2 union_rectangles(const vector<pair<pair<T,T>,pair<T,T>>>&recs){
     while(l<r){
       if(l&1)mn[l++]+=add;
       if(r&1)mn[--r]+=add;
-      l>>=1,r>>=1;
-    }
-    upd(l2),upd(r2);
-  }
-  return res;
-}
+      l>>=1,r>>=1;}
+    upd(l2),upd(r2);}
+  return res;}

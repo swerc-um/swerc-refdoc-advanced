@@ -22,8 +22,7 @@ def tsp_dp(n, dist):
                     _next[i][mask] = bit
         return dp[i][mask]
     F(0, (1 << n) - 1)
-    path = []
-    node, mask = 0, (1 << n) - 1
+    path, node, mask = [], 0, (1 << n) - 1
     while node != -1:
         mask ^= (1 << node)
         path.append(node)

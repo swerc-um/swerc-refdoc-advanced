@@ -20,7 +20,6 @@ def merge(u, v):
             _sum[u] = c
         elif colors[u][c] == mx[u]:
             _sum[u] += c
-
 _sum = list(map(int,input().split()))
 mx = [1] * n
 colors = [{c:1} for c in _sum]

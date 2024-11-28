@@ -14,9 +14,7 @@
  * Status: somewhat tested
  */
 
-using C=complex<double>;
-const ll mod=998244353;
-
+using C=complex<double>; const ll mod=998244353;
 void fft(vector<C>&a){
 	int n=sz(a),L=31-__builtin_clz(n);
 	static vector<complex<long double>>R(2,1);
@@ -39,71 +37,28 @@ void fft(vector<C>&a){
 				auto x=(double*)&rt[j+k],y=(double*)&a[i+j+k];
 				C z(x[0]*y[0]-x[1]*y[1],x[0]*y[1]+x[1]*y[0]);
 				a[i+j+k]=a[i+j]-z;
-				a[i+j]+=z;
-		}
-	}
-}
-
-vector<double> conv(const vector<double>&a, const vector<double>&b){
-	if(a.empty() || b.empty()) return {};
-	vector<double> res(sz(a)+sz(b)-1);
-	int L=32-__builtin_clz(sz(res)),n=1<<L;
-	vector<C> in(n),out(n);
-	copy(a.begin(),a.end(),begin(in));
-	for(int i=0;i<sz(b);i++)
-		in[i].imag(b[i]);
-	fft(in);
-	for(C&x:in)x*=x;
-	for(int i=0;i<n;i++){
-		out[i]=in[-i&(n-1)]-conj(in[i]);
-	}
-	fft(out);
-	for(int i=0;i<sz(res);i++){
-		res[i]=imag(out[i])/(4*n);
-	}
-	return res;
-}
-
+				a[i+j]+=z;}}}
 template<ll M>
 vector<ll> convMod(const vector<ll>&a, const vector<ll>&b){
 	if(a.empty() || b.empty()) return {};
 	vector<ll> res(sz(a)+sz(b)+1);
 	int B=32-__builtin_clz(sz(res)),n=1<<B,cut=int(sqrt(M));
 	vector<C> L(n),R(n),outs(n),outl(n);
-	for(int i=0;i<sz(a);i++){
+	for(int i=0;i<sz(a);i++)
 		L[i]=C((int)a[i]/cut,(int)a[i]%cut);
-	}
-	for(int i=0;i<sz(b);i++){
+	for(int i=0;i<sz(b);i++)
 		R[i]=C((int)b[i]/cut,(int)b[i]%cut);
-	}
 	fft(L),fft(R);
 	for(int i=0;i<n;i++){
 		int j=-i&(n-1);
 		outl[j]=(L[i]+conj(L[j]))*R[i]/(2.0*n);
-		outs[j]=(L[i]-conj(L[j]))*R[i]/(2.0*n)/1i;
-	}
+		outs[j]=(L[i]-conj(L[j]))*R[i]/(2.0*n)/1i;}
 	fft(outl),fft(outs);
 	for(int i=0;i<sz(res);i++){
 		ll av=ll(real(outl[i])+.5),cv=ll(imag(outs[i])+.5);
 		ll bv=ll(imag(outl[i])+.5)+ll(real(outs[i])+.5);
-		res[i]=((av%M*cut+bv)%M*cut+cv)%M;
-	}
-	return res;
-}
-
-ll fexp(ll b, ll e){
-	ll res=1;
-	while(e>0){
-		if(e&1)res=res*b%mod;
-		b=b*b%mod;
-		e>>=1;
-	}
-	return res;
-}
-ll inv(ll n){
-	return fexp(n,mod-2);
-}
-
+		res[i]=((av%M*cut+bv)%M*cut+cv)%M;}
+	return res;}
 vlli shift(vector<ll> &a, ll v){
 	ll n=sz(a)-1;
 	vlli f(n+1), g(n+1), i_fact(n+1);
@@ -116,12 +71,9 @@ vlli shift(vector<ll> &a, ll v){
 		f[i]=fact*a[i]%mod;
 		potk=(potk*v%mod+mod)%mod;
 		g[n-i]=((potk*inv(fact))%mod+mod)%mod;
-		i_fact[i]=inv(fact);
-	}
+		i_fact[i]=inv(fact);}
 	auto p = convMod<mod>(f,g);
 	vlli res(n+1);
-	for(int i=0;i<n+1;i++){
+	for(int i=0;i<n+1;i++)
 		res[i]=(p[i+n]*i_fact[i]%mod+mod)%mod;
-	}
-	return res;
-}
+	return res;}
