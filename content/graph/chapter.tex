@@ -43,7 +43,15 @@
 	\kactlimport{MinCostMaxFlow.h}
 	\kactlimport{CirculationDemands.py}
 
-\section{$s-t$ coupe minimum pour graphe planaire}
+    \textbf{Flow with demands}\\
+    We make the following changes in the network. We add a new source $s'$ and a new sink $t'$, a new edge from the source $s'$ to every other vertex, a new edge for every vertex to the sink $t'$, and one edge from $t$ to $s$. Additionally, we define the new capacity function $c'$ as:\newline
+    $c'((s', v)) = \sum_{u \in V} d((u, v)) \quad \text{for each edge } (s', v),$\newline
+    $c'((v, t')) = \sum_{w \in V} d((v, w)) \quad \text{for each edge } (v, t'),$\newline
+    $c'((u, v)) = c((u, v)) - d((u, v)) \quad \text{for each edge } (u, v) \text{ in the old network},$\newline
+    $c'((t, s)) = \infty.$\newline
+    If the new network has a saturating flow (a flow where each edge outgoing from $s'$ is completely filled, which is equivalent to every edge incoming to $t'$ being completely filled), then the network with demands has a valid flow, and the actual flow can be easily reconstructed from the new network. Otherwise, there doesn't exist a flow that satisfies all conditions. Since a saturating flow has to be a maximum flow, it can be found by any maximum flow algorithm.\newline
+
+    \textbf{$s-t$ coupe minimum pour graphe planaire}\\
     Dans le graphe \emph{dual}, chaque cellule est un sommet, et il existe deux sommets supplémentaires $s'$ et $t'$. Le sommet $s'$ représente le bord gauche et haut de la grille et le sommet $t'$ le bord droit et bas. Dans ce nouveau graphe, deux sommets sont reliés s'ils sont séparés par une arête du graphe primal. Le poids des arêtes est le même.
     Tout $s'-t'$ chemin dans le graphe dual de longueur $w$ correspond à une $s-t$ coupe dans le graphe primal de même valeur $w$ et vice-versa.
 
