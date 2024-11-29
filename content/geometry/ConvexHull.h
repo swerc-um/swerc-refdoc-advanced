@@ -16,20 +16,23 @@ Points on the edge of the hull between two other points are not considered part 
  * Time: O(n \log n)
  * Status: stress-tested, tested with kattis:convexhull
 */
-#pragma once
 
 #include "Point.h"
 
 typedef Point<ll> P;
-vector<P> convexHull(vector<P> pts) {
-	if (sz(pts) <= 1) return pts;
-	sort(all(pts));
-	vector<P> h(sz(pts)+1);
-	int s = 0, t = 0;
-	for (int it = 2; it--; s = --t, reverse(all(pts)))
-		for (P p : pts) {
-			while (t >= s + 2 && h[t-2].cross(h[t-1], p) <= 0) t--;
-			h[t++] = p;
-		}
-	return {h.begin(), h.begin() + t - (t == 2 && h[0] == h[1])};
+vector<P> convexHull(vector <P> pt) {
+    int n = sz(pt);
+    sort(all(pt), [&](P a, P b) {
+        return a.x == b.x ? a.y < b.y : a.x < b.x;
+    });
+    vector<P> ans = {pt[0]};
+    for (int t : {0, 1}) {
+        int m = sz(ans);
+        for (int i = 1; i < n; ++i) {
+            while (sz(ans) > m && ans[sz(ans)-2].cross(ans.back(), pt[i]) < 0)
+                ans.pop_back();
+            ans.pb(pt[i]);}
+        reverse(all(pt));}
+    ans.pop_back();
+    return ans;
 }

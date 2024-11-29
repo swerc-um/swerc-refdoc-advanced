@@ -16,7 +16,7 @@ int main() {
     freopen("input.in", "r", stdin);
     freopen("output.out", "w", stdout);
     vi cord;
-    cord.erase(unique(cord.begin(),cord.end()),cord.end());  // supprime doublons
+    sort(all(ans)), ans.resize(unique(all(ans)) - ans.begin());  // supprime doublons
     ll k = rng(); // random 64 bits integer
     random_device dev;
     mt19937 rng(dev());
