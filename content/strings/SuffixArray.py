@@ -1,11 +1,7 @@
 """
  * Author: X
  * Description: Compute SuffixArray and LCP
- * Tested on Kattis:
- * Suffix Array and LCP (longest common prefix) : Suffix Sorting, Stammering Aliens
- * LCS (longest common substr) : Life Forms, Longest Common Substring
- * LRS (longest repeadted substr) : Dvaput
- * Unique Substrings : Repeated Substrings
+ * Suffix Array and LCP (longest common prefix), LCS (longest common substr), LRS (longest repeadted substr), Unique Substrings
  * Time: $O(N)$
 """
 

@@ -2,7 +2,7 @@
  * Author: X
  * Description: Wildcard Pattern Matching
  * Given strings S and T consisting of lowercase English letters and
- * asterisks (*) wildcards, returns W where W[i] = 1 iff S[i:i+|T|]
+ * asterisks (*) wildcards, returns W where W[i] = 1 iff $S[i:i+|T|]$
  * and T are matched, 0 otherwise
  * S : abc*b*a***a, T : *b*a, W : 10111011
  * Time: approx. $O(N)$

@@ -1,7 +1,7 @@
 /** 
  * Author: X
  * Description: RabinKarp rolling hashes in 2d
- * Usage: RK2d\(pattern, masterpiece, 31\)
+ * Usage: RK2d(pattern, masterpiece, 31)
  * Time: $O(N \cdot M)$
 */
 
