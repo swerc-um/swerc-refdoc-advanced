@@ -1,7 +1,6 @@
 /**
- * Author: X
- * Description: Container where you can add lines of the form kx+m, and query maximum values at points x.
- *  Useful for dynamic programming (``convex hull trick'').
+ * Author:
+ * Description: Lines kx+m, max query at x.
  * Time: $O(\log N)$
  */
 

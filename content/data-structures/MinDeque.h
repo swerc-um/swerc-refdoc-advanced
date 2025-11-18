@@ -1,7 +1,6 @@
 /**
- * Author: X
- * Description: Deque with push\_front, push\_back, getmin in constant time.
- * Time: $O(1)$.
+ * Author:
+ * Description: push\_front, push\_back, getmin in $O(1)$.
 */
 
 struct minstack {

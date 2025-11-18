@@ -5,15 +5,12 @@
 """
 
 def floyd(x0, f):
-    t = f(x0)
-    h = f(f(x0))
+    t, h = f(x0), f(f(x0))
     while t != h:
-        t = f(t)
-        h = f(f(h))
+        t, h = f(t), f(f(h))
     start, t = 0, x0
     while t != h:
-        t = f(t)
-        h = f(h)
+        t, h = f(t), f(h)
         start += 1
     period, h = 1, f(t)
     while t != h:

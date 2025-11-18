@@ -1,7 +1,6 @@
 """
- * Author: X
- * Description: SegmentTree
- * Time: $O(N\log N)$
+ * Author:
+ * Description:
 """
 
 def update(p, val):
@@ -39,11 +38,3 @@ def query(p):
         res += seg[p]
         p >>= 1
     return res
-
-# reduce the complexity from O(N log N) to O(N) to get all values.
-# works only in case the order of modifications on a single element doesn't affect the result.
-def push():
-    for i in range(1, N):
-        seg[i<<1] += seg[i]
-        seg[i<<1|1] += seg[i]
-        seg[i] = 0

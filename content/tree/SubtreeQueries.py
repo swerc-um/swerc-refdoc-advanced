@@ -29,7 +29,3 @@ index = [None] * n
 for i, e in enumerate(order):
     index[e] = i
 val = [val[i] for i in order]
-T = list(val)
-for i, v in enumerate(val):
-    j = i | (i+1)
-    if j < n: T[j] += T[i]
