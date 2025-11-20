@@ -1,11 +1,12 @@
 /**
  * Author:
- * Description:
+ * Description: To get a map, change $null_type$
  * Usage: indexed_set<pii> s;
  *  s.insert({x[i], i});
  *  s.erase({x[i-k], i-k});
  *  s.find_by_order((k-1)/2)->first;
  *  s.order_of_key(7) //pos el would have
+ *  s.join(s2) //merge s2 into s
  * Time: $O(\log N)$
  */
 
