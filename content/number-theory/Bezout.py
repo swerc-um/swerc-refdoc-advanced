@@ -17,14 +17,12 @@ def bezout(a, b):
 def solve(c1, a, c2, b, n):
     g, x, y = bezout(a, b)
     if n%g: return -1
-    x *= n//g; y *= n//g
-    a //= g; b //= g
-    lo = -(x // b)
-    hi = y // a
-    if lo > hi: return -1
-# minimize c1 * x
-    res1 = c1 * (x + b * lo) + c2 * (y - a * lo) 
-# minimize c2 * y
-    res2 = c1 * (x + b * hi) + c2 * (y - a * hi) 
-    if res1 < res2: return x + b * lo, y - a * lo
-    return x + b * hi, y - a * hi
+    # to get to ax + by = n
+    x *= n // g
+    y *= n // g
+    # lo <= k <= hi to get x and y positive
+    lo = -((x * g) // b)
+    hi = (y * g) // a
+    if lo > hi:
+        return -1
+    return x + (b * lo) // g, y - (a * lo) // g

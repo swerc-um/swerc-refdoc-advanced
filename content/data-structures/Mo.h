@@ -1,6 +1,7 @@
 /**
  * Author: X
  * Description:
+ * Usage: intervals [l, r)
  */
 
 void add(int ind, int end); // add a[ind] (end = 0 or 1)

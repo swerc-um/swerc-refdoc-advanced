@@ -1,13 +1,15 @@
 #include <bits/stdc++.h>
 #include <bits/extc++.h>
+#pragma GCC target("avx2")
+#pragma GCC optimize ("O3")
+#pragma GCC optimize ("unroll-loops")
 using namespace std;
-#define INF 0x3f3f3f3f
+using namespace __gnu_pbds;
 #define rep(i, a, b) for(int i = a; i < (b); ++i)
 #define all(x) begin(x), end(x)
 #define sz(x) (int)(x).size()
+#define endl '\n'
 typedef long long ll;
-typedef pair<int, int> pii;
-typedef vector<int> vi;
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 int main() {
@@ -15,8 +17,7 @@ int main() {
 	cin.exceptions(cin.failbit);
     freopen("input.in", "r", stdin);
     freopen("output.out", "w", stdout);
-    vi cord;
-    sort(all(ans)), ans.resize(unique(all(ans)) - ans.begin());  // supprime doublons
+    sort(all(a)), a.resize(unique(all(a)) - a.begin());
     ll k = rng(); // random 64 bits integer
     random_device dev;
     mt19937 rng(dev());
