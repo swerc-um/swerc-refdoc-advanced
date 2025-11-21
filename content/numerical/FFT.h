@@ -69,21 +69,17 @@ vector<ll> convMod(const vector<ll>&a, const vector<ll>&b){
 		ll bv=ll(imag(outl[i])+.5)+ll(real(outs[i])+.5);
 		res[i]=((av%M*cut+bv)%M*cut+cv)%M;}
 	return res;}
-vlli shift(vector<ll> &a, ll v){
-	ll n=sz(a)-1;
-	vlli f(n+1), g(n+1), i_fact(n+1);
-	f[0]=a[0];
-	g[n]=1;
-	i_fact[0]=1;
-	ll fact=1,potk=1;
-	for(int i=1;i<n+1;i++){
-		fact=fact*i%mod;
-		f[i]=fact*a[i]%mod;
-		potk=(potk*v%mod+mod)%mod;
-		g[n-i]=((potk*inv(fact))%mod+mod)%mod;
-		i_fact[i]=inv(fact);}
-	auto p = convMod<mod>(f,g);
-	vlli res(n+1);
-	for(int i=0;i<n+1;i++)
-		res[i]=(p[i+n]*i_fact[i]%mod+mod)%mod;
-	return res;}
+vd conv(const vd& a, const vd& b) {
+	if (a.empty() || b.empty()) return {};
+	vd res(sz(a) + sz(b) - 1);
+	int L = 32 - __builtin_clz(sz(res)), n = 1 << L;
+	vector<C> in(n), out(n);
+	copy(all(a), begin(in));
+	rep(i,0,sz(b)) in[i].imag(b[i]);
+	fft(in);
+	for (C& x : in) x *= x;
+	rep(i,0,n) out[i] = in[-i & (n - 1)] - conj(in[i]);
+	fft(out);
+	rep(i,0,sz(res)) res[i] = imag(out[i]) / (4 * n);
+	return res;
+}
