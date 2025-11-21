@@ -16,9 +16,6 @@
     Add edge $(0, \text{vtx}, 0)$ for each vertex.  
     Negative cycle: no solution.  
     Otherwise, solution: $-\min(D)$.
-    \kactlimport{Dijkstra.h}
-    \kactlimport{BellmanFord.py}
-    \kactlimport{Dials.h}
 
     \textbf{Number of Spanning Trees}\\
     % I.e. matrix-tree theorem.
@@ -34,6 +31,32 @@
     % Test: stress-tests/graph/erdos-gallai.cpp
     A simple graph with node degrees $d_1 \ge \dots \ge d_n$ exists iff $d_1 + \dots + d_n$ is even and for every $k = 1\dots n$,
     \[ \sum _{i=1}^{k}d_{i}\leq k(k-1)+\sum _{i=k+1}^{n}\min(d_{i},k). \]
+    
+    \textbf{Number of paths of a fixed length}\\
+	Given the adjacency matrix $G$ of a graph, the number of paths from node $a$ to node $b$ using exactly $k$ edges equals $G^k[a][b]$.
+
+	\textbf{Shortest paths of a fixed length}\\
+	$C[i][j] = \min_{k=1}^N \; A[i][k] + B[k][j]$.  
+	Identity matrix where the main diagonal values are zeros and all other values are infinity values.  
+	Shortest path length from node $a$ to node $b$ using exactly $k$ edges equals $G^k[a][b]$.  
+	Be careful with duplicate edges.
+
+	\textbf{Generalization of the problems for paths with length up to $k$}\\
+	This can be done by slightly modifying the input graph.  
+	We duplicate each vertex: for each vertex $v$ we create one more vertex $v'$ and add the edge $(v, v')$ and the loop $(v', v')$.  
+	The number of paths between $i$ and $j$ with at most $k$ edges is the same as the number of paths between $i$ and $j'$ with exactly $k+1$ edges.  
+	The same trick can be applied to compute the shortest paths with at most $k$ edges: we again duplicate each vertex and add the two mentioned edges with weight $0$.
+	
+	\textbf{Eulerian subgraphs}\\
+In a undirected graph, we consider subgraphs that have all nodes of the original graph and some of its edges. A subgraph is called Eulerian if each node has even degree.
+Number of Eulerian subgraphs = $2^{n-m+cc}$.
+
+	\textbf{Tarjan criterion}\\
+	Some spanning tree is minimal if and only if the weight of any other edge $(x, y)$ (not from spanning tree) is not less than the weight of the heaviest edge on the path from $x$ to $y$ in spanning tree.
+
+    \kactlimport{Dijkstra.h}
+    \kactlimport{BellmanFord.py}
+    \kactlimport{Dials.h}
 
 \section{Network flow}
     \kactlimport{dinic.h}

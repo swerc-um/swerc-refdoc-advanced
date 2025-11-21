@@ -2,14 +2,24 @@
  * Author: Ludo Pulles, chilli, Simon Lindholm
  * Date: 2019-01-09
  * License: CC0
- * Description: fft(a) computes $\hat f(k) = \sum_x a[x] \exp(2\pi i \cdot k x / N)$ for all $k$. N must be a power of 2.
-   Useful for convolution:
-   \texttt{conv(a, b) = c}, where $c[x] = \sum a[i]b[x-i]$.
-   For convolution of complex numbers or more than two vectors: FFT, multiply
-   pointwise, divide by n, reverse(start+1, end), FFT back.
-   Rounding is safe if $(\sum a_i^2 + \sum b_i^2)\log_2{N} < 9\cdot10^{14}$
-   (in practice $10^{16}$; higher for random inputs).
-   Otherwise, use NTT/FFTMod.
+ * Description: \texttt{conv(a, b) = c}, where $c[x] = \sum a[i]b[x-i]$.\\
+ At most $k$ mismatches :
+   Let's fix some character $c$.
+We define a polynomial
+\[
+R_c(x) = \sum_i [\,T[i] = c\,]\, x^i,
+\]
+that is, we consider only the positions that are equal to $c$ in the text.
+We do the same for the pattern, but reversed:
+\[
+S_c(x) = \sum_i [\,P[i] = c\,]\, x^{\,|P|-1-i}.
+\]
+The coefficient of $x^{|P|-1}$ of $R * S$
+is equal to the number of characters $c$ that match if we try to match $P$
+at position $0$ in $T$; the coefficient of $x^{|P|}$ of $R * S$
+is equal to the number of characters $c$ that match if we try to match $P$
+at position $1$ in $T$, and so on.
+
  * Time: O(N \log N) with $N = |A|+|B|$ ($\tilde 1s$ for $N=2^{22}$)
  * Status: somewhat tested
  */

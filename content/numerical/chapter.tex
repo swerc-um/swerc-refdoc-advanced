@@ -1,9 +1,42 @@
 \chapter{Numerical}
 
 \section{Polynomials and recurrences}
-    \kactlimport{PolyRoots.h}
-    \kactlimport{PolyInterpolate.h}
-    %\kactlimport{BerlekampMassey.h}
+
+	\textbf{Linear recurrences}\\
+	\[
+X \cdot
+\begin{bmatrix}
+f(i)\\[4pt]
+f(i+1)\\[4pt]
+\vdots\\[4pt]
+f(i+k-1)
+\end{bmatrix}
+=
+\begin{bmatrix}
+f(i+1)\\[4pt]
+f(i+2)\\[4pt]
+\vdots\\[4pt]
+f(i+k)
+\end{bmatrix}.
+\]
+\[
+X =
+\begin{bmatrix}
+0 & 1 & \cdots & 0\\[4pt]
+\vdots & \vdots & \ddots & \vdots\\[4pt]
+0 & 0 & \cdots & 1\\[4pt]
+c_k & c_{k-1} & \cdots & c_1
+\end{bmatrix}.
+\]
+
+In the first \(k-1\) rows, each element is \(0\) except that one element is \(1\).
+These rows replace \(f(i)\) with \(f(i+1)\), \(f(i+1)\) with \(f(i+2)\), and so on.
+The last row contains the coefficients of the recurrence to calculate the new value \(f(i+k)\).
+
+
+    %\kactlimport{PolyRoots.h}
+    %\kactlimport{PolyInterpolate.h}
+    \kactlimport{BerlekampMassey.h}
     \kactlimport{LinearRecurrence.h}
     \kactlimport{FFT.h}
 
@@ -12,10 +45,10 @@
 
 \section{Matrices}
     %\kactlimport{Determinant.h}
-    %\kactlimport{IntDeterminant.h}
+    \kactlimport{IntDeterminant.h}
     \kactlimport{SolveLinear.h}
     \kactlimport{SolveLinear2.h}
     \kactlimport{SolveLinearBinary.h}
     \kactlimport{Matrix.h}
     \kactlimport{MatrixInverse.h}
-    \kactlimport{Tridiagonal.h}
+    %\kactlimport{Tridiagonal.h}
